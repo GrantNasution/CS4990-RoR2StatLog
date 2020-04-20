@@ -1,6 +1,6 @@
 # ror2statlog
 
-A new Flutter project.
+App for recording RoR2 runs.
 
 ## Getting Started
 
