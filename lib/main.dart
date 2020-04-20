@@ -13,10 +13,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'RoR2 Stat Log',
       theme: ThemeData(
-        appBarTheme: AppBarTheme(color: Colors.black,),
-        primaryColor: Colors.black,
+        appBarTheme: AppBarTheme(color: Color(0xff0b141c),),
+        primaryColor: Color(0xff0b141c),
         dividerColor: Color(0xffffcc00),
-        scaffoldBackgroundColor: Color(0xFF13131a), 
+        scaffoldBackgroundColor: Color(0xff0c2036), 
         textTheme: TextTheme(),
       ),
       home: HomePage(),
@@ -41,7 +41,7 @@ class HomePageState extends State<HomePage> {
   bool initialized = false;
 
   TextStyle _getTextStyle() {
-    return TextStyle(fontSize: 25.0, color: Color(0xffffcc00));
+    return TextStyle(fontSize: 25.0, color: Color(0xffe9f1f4));
   }
   TextStyle _getAppBarTextStyle() {
     return TextStyle(color: Color(0xffddf2f4));
@@ -50,21 +50,50 @@ class HomePageState extends State<HomePage> {
   //Builds list of all logs
   Widget _buildLogs() {
     return ListView.builder(
-      itemCount: (_savedLogs.length * 2),
+      itemCount: _savedLogs.length,
       itemBuilder: (context, i) {
-        if(i.isOdd) {
-          return Divider(thickness: 0.5, color: Color(0xff2fc7e0));
-        }
-        final index = i ~/ 2;
-        //If more rows to build, build it
-        if(index < _savedLogs.length) {
-          return _buildRow(_savedLogs[index], index);
-        }
-        //If no more rows return dividers
-        else {
-          return Divider(thickness: 0.5);
-        }
-      }
+        return Container(
+          child: _buildLogCard(_savedLogs[i], i),
+        );
+      },
+    );
+  //   return ListView.builder(
+  //     itemCount: (_savedLogs.length * 2),
+  //     itemBuilder: (context, i) {
+  //       if(i.isOdd) {
+  //         return Divider(thickness: 0.5, color: Color(0xff2fc7e0));
+  //       }
+  //       final index = i ~/ 2;
+  //       //If more rows to build, build it
+  //       if(index < _savedLogs.length) {
+  //         return _buildRow(_savedLogs[index], index);
+  //       }
+  //       //If no more rows return dividers
+  //       else {
+  //         return Divider(thickness: 0.5);
+  //       }
+  //     }
+  //   );
+  }
+
+  Widget _buildLogCard(Log log, int selectedIndex) {
+    return Card(
+      color: Color(0xff103f68),
+      child: ListTile(
+        title: Text(
+          log.gClass,
+          style: _getTextStyle(),
+        ),
+        trailing: Icon(
+          Icons.arrow_forward_ios,
+          color: Color(0xffffcc00),
+        ),
+        onTap:() {
+          //Set which index to view
+          viewIndex = selectedIndex;
+          _pushView(Views.viewLog);
+        },
+      )
     );
   }
 
@@ -77,7 +106,7 @@ class HomePageState extends State<HomePage> {
       ),
       trailing: Icon(
         Icons.arrow_forward_ios,
-        color: Color(0xffffcc00),
+        color: Color(0xfffffcb1),
       ),
       onTap:() {
         //Set which index to view
@@ -138,6 +167,8 @@ class HomePageState extends State<HomePage> {
           ),
         actions: <Widget>[
           PopupMenuButton<Views>(
+            icon: Icon(Icons.more_vert, color: Color(0xffffcc00)),
+            color: Color(0xff0c2036),
             onSelected: (Views selected) {
               _pushView(selected);
             },
