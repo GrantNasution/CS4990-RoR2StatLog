@@ -10,8 +10,8 @@ class Bar extends StatelessWidget {
   final int _baseDurationMs = 1000;
   final double _maxElementWidth = 200;
 
-  Bar(int length, String label, double maxLength, Color color) {
-    this.length = 1.0;
+  Bar(double length, String label, double maxLength, Color color) {
+    this.length = length;
     this.label = label;
     this.maxLength = maxLength;
     this.color = color;

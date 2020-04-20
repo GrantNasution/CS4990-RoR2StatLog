@@ -14,10 +14,31 @@ class LogView extends StatefulWidget {
 }
 
 class LogViewState extends State<LogView> {
-  List<double> barLengths = new List<double>();
+  double killLength, minionKillLength, damageDealtLength, mdamageDealtLength;
 
   void _findBarLengths() {
-
+    var random = new Random();
+    //Assume damageDealt > minionDamgeDealt > kills > minionKills
+    killLength = (60 + random.nextInt(9)).toDouble()/100.0;
+    minionKillLength = (40 + random.nextInt(19)).toDouble()/100.0;
+    damageDealtLength = (90 + random.nextInt(10)).toDouble()/100.0;
+    mdamageDealtLength = (70 + random.nextInt(10)).toDouble()/100.0;
+    //Swap values if assumptions were wrong
+    if(widget.log.kills < widget.log.minionKills) {
+      var temp = killLength;
+      killLength = minionKillLength;
+      minionKillLength = temp;
+    }
+    if(widget.log.damageDealt < widget.log.minionDamageDealt) {
+      var temp = damageDealtLength;
+      damageDealtLength = mdamageDealtLength;
+      mdamageDealtLength = temp;
+    }
+    if(widget.log.kills > widget.log.minionDamageDealt) {
+      var temp = killLength;
+      killLength = mdamageDealtLength;
+      mdamageDealtLength = killLength;
+    }
   }
 
   @override
@@ -86,7 +107,7 @@ class LogViewState extends State<LogView> {
                   fontFamily: 'RoRSquare',
                 ),
               ),
-              Bar(5, widget.log.kills.toString(), width - 50,
+              Bar(killLength, widget.log.kills.toString(), width - 50,
                   Color(0xffd64949)),
               Text(
                 'Minion Kills',
@@ -95,7 +116,7 @@ class LogViewState extends State<LogView> {
                   fontFamily: 'RoRSquare',
                 ),
               ),
-              Bar(5, widget.log.gminionKills.toString(), width - 50,
+              Bar(minionKillLength, widget.log.gminionKills.toString(), width - 50,
                   Color(0xff94c1a1)),
               Text(
                 'Damage Dealt',
@@ -104,7 +125,7 @@ class LogViewState extends State<LogView> {
                   fontFamily: 'RoRSquare',
                 ),
               ),
-              Bar(5, widget.log.damageDealt.toString(), width - 50,
+              Bar(damageDealtLength, widget.log.damageDealt.toString(), width - 50,
                   Color(0xffd64949)),
               Text(
                 'Minion Damage Dealt',
@@ -113,7 +134,7 @@ class LogViewState extends State<LogView> {
                   fontFamily: 'RoRSquare',
                 ),
               ),
-              Bar(5, widget.log.gminionDamageDealt.toString(), width - 50,
+              Bar(mdamageDealtLength, widget.log.gminionDamageDealt.toString(), width - 50,
                   Color(0xff94c1a1)),
             ],
           ),
