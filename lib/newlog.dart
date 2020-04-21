@@ -60,6 +60,8 @@ class NewLogPageState extends State<NewLogPage> {
                     isEmpty: _currentSelectedValue == '',
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
+                        focusColor: Colors.black,
+                        style: TextStyle(color: Color(0xffb51235)),
                         value: _currentSelectedValue,
                         isDense: true,
                         onChanged: (String newValue) {
